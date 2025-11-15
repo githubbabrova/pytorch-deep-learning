@@ -1,8 +1,9 @@
 """
 Contains various utility functions for PyTorch model training and saving.
 """
-import torch
 from pathlib import Path
+
+import torch
 
 def save_model(model: torch.nn.Module,
                target_dir: str,
@@ -33,3 +34,25 @@ def save_model(model: torch.nn.Module,
     print(f"[INFO] Saving model to: {model_save_path}")
     torch.save(obj=model.state_dict(),
              f=model_save_path)
+
+
+def load_model(model: torch.nn.Module,
+               model_path: str,
+               device: torch.device):
+    """Loads a PyTorch model from a target path.
+
+    Args:
+    model: A target PyTorch model to load the state_dict into.
+    model_path: A file path to the model.
+    device: The device to map the model to (e.g. "cpu" or "cuda").
+
+    Example usage:
+    load_model(model=model_0,
+               model_path="models/05_going_modular_tingvgg_model.pth",
+               device=device)
+    """
+    # Load the model state_dict()
+    print(f"[INFO] Loading model from: {model_path}")
+    model.load_state_dict(torch.load(f=model_path,
+                                     map_location=device))
+    return model  

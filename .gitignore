@@ -171,3 +171,7 @@ flagged/
 # Docs
 .cache
 mkdocs-material-insiders
+extras/exercises/data/
+going_modular/models/
+extras/exercises/models/
+models/

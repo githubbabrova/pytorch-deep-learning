@@ -2,21 +2,38 @@
 Trains a PyTorch image classification model using device-agnostic code.
 """
 
-import os
+
 import torch
-import data_setup, engine, model_builder, utils
 
 from torchvision import transforms
 
+import data_setup, engine, model_builder, utils
+
+import argparse
+
+# Create the parser
+parser = argparse.ArgumentParser(description="Train a PyTorch image classification model.")
+
+# Add arguments
+parser.add_argument("--num_epochs", type=int, default=5, help="Number of epochs to train for")
+parser.add_argument("--batch_size", type=int, default=32, help="Batch size for training")
+parser.add_argument("--hidden_units", type=int, default=10, help="Number of hidden units in the model")
+parser.add_argument("--learning_rate", type=float, default=0.001, help="Learning rate for the optimizer")
+
+parser.add_argument("--train_dir", type=str, default="data/pizza_steak_sushi/train", help="Directory for training data")
+parser.add_argument("--test_dir", type=str, default="data/pizza_steak_sushi/test", help="Directory for test data")
+
+args = parser.parse_args()
+
 # Setup hyperparameters
-NUM_EPOCHS = 5
-BATCH_SIZE = 32
-HIDDEN_UNITS = 10
-LEARNING_RATE = 0.001
+NUM_EPOCHS = args.num_epochs
+BATCH_SIZE = args.batch_size
+HIDDEN_UNITS = args.hidden_units
+LEARNING_RATE = args.learning_rate
 
 # Setup directories
-train_dir = "data/pizza_steak_sushi/train"
-test_dir = "data/pizza_steak_sushi/test"
+train_dir = args.train_dir
+test_dir = args.test_dir
 
 # Setup target device
 device = "cuda" if torch.cuda.is_available() else "cpu"
